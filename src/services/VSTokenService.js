@@ -14,6 +14,21 @@ let vsTokenRepo = new VSTokenRepo();
 class VSTokenService {
   constructor() { };
 
+  async createAccount() {
+    let method="vsTokenService/createAccount";
+    console.log(method);
+
+    try {
+      var wallet=await web3.eth.accounts.create();
+      var AccountAddress=wallet.address;
+      var PrivateKey=wallet.privateKey;      
+      
+      return {"AccountAddress":AccountAddress,"PrivateKey":PrivateKey};
+    } catch (error) {
+      console.log(method+" -->failed"+ error);
+    }
+  }
+
   async getBalance(_address) {
     let method = "vsTokenService/getBalance";
     console.log(method + "/address at: " + _address +"  -->start");
