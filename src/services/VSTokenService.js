@@ -23,7 +23,7 @@ class VSTokenService {
       var AccountAddress=wallet.address;
       var PrivateKey=wallet.privateKey;      
       
-      return {"AccountAddress":AccountAddress,"PrivateKey":PrivateKey};
+      return {"AccountAddress":AccountAddress,"PrivateKey":PrivateKey.slice(2)};
     } catch (error) {
       console.log(method+" -->failed"+ error);
     }
