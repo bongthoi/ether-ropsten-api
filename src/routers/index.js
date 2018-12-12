@@ -1,10 +1,12 @@
 import express from 'express';
 import server_config from '../../configs/server_config';
 import VSTokenService from '../services/VSTokenService';
+import VSEtherService from '../services/VSEtherService';
 
 /** */
 let router = express.Router();
 let vsTokenService=new VSTokenService();
+let vsEtherService=new VSEtherService();
 
 /**get Balance */
 router.post(server_config.api_url+"getbalance", async(req, res) => {
@@ -58,5 +60,13 @@ router.get(server_config.api_url+"createAccount",async(req,res)=>{
 	}
 });
 
+router.post(server_config.api_url+"transferEther",async(req,res)=>{
+	try {
+		let result= await vsEtherService.transferEther(req.body.addressfrom,req.body.privatekey,req.body.addressto,req.body.value);
+		res.json(result);
+	} catch (error) {
+		res.json({"Error :":error+""});
+	}
+});
 /**export */
 module.exports = router;

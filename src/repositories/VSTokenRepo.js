@@ -10,7 +10,7 @@ const contractAddress = ether_config.contractAddress;
 // khoi tao web3
 const web3 = new Web3(provider);
 var contract = null;
-let etherScan=new EtherScan();
+let etherScan = new EtherScan();
 
 class VSTokenRepo {
   constructor() { };
@@ -35,7 +35,7 @@ class VSTokenRepo {
   }
 
   // Dang ky Transaction
-  async sendSignTransaction(rawTrans,theAccount,thePrivateKey) {
+  async sendSignTransaction(rawTrans, theAccount, thePrivateKey) {
     // Initiate values required by the dataTrans
     if (rawTrans) {
       var txCount = await web3.eth.getTransactionCount(theAccount);
@@ -58,7 +58,7 @@ class VSTokenRepo {
 
       // sign transaction
       var tx = new TX(dataTrans);
-      tx.sign(new Buffer(thePrivateKey,'hex'));
+      tx.sign(new Buffer(thePrivateKey, 'hex'));
 
       // after signing send the transaction
       return await etherScan.sendSigned(tx);
@@ -67,8 +67,7 @@ class VSTokenRepo {
     }
 
   }
-
+  
 }
-
 
 module.exports = VSTokenRepo;

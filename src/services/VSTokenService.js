@@ -15,23 +15,23 @@ class VSTokenService {
   constructor() { };
 
   async createAccount() {
-    let method="vsTokenService/createAccount";
+    let method = "vsTokenService/createAccount";
     console.log(method);
 
     try {
-      var wallet=await web3.eth.accounts.create();
-      var AccountAddress=wallet.address;
-      var PrivateKey=wallet.privateKey;      
-      
-      return {"AccountAddress":AccountAddress,"PrivateKey":PrivateKey.slice(2)};
+      var wallet = await web3.eth.accounts.create();
+      var AccountAddress = wallet.address;
+      var PrivateKey = wallet.privateKey;
+
+      return { "AccountAddress": AccountAddress, "PrivateKey": PrivateKey.slice(2) };
     } catch (error) {
-      console.log(method+" -->failed"+ error);
+      console.log(method + " -->failed" + error);
     }
   }
 
   async getBalance(_address) {
     let method = "vsTokenService/getBalance";
-    console.log(method + "/address at: " + _address +"  -->start");
+    console.log(method + "/address at: " + _address + "  -->start");
 
     if (_address) {
       try {
@@ -41,7 +41,7 @@ class VSTokenService {
         console.log(method + " -->success");
         return { "ethBalance": ethBalance, "tokenBalance": tokenBalance };
       } catch (error) {
-        console.log(method + " -->failed"+error);
+        console.log(method + " -->failed" + error);
       }
     }
   }
@@ -50,42 +50,42 @@ class VSTokenService {
   // @addressFrom
   // @addressTo
   // @value
-async transferTo(_addressTo,_value) {
-  let method="vsTokenService/transferTo";
-  console.log(method+ " -->start");
-  if (_addressTo && _value) {
+  async transferTo(_addressTo, _value) {
+    let method = "vsTokenService/transferTo";
+    console.log(method + " -->start");
+    if (_addressTo && _value) {
 
-    const rawTrans = await vsTokenRepo.getContract().methods.transferTo(_addressTo,Number(_value));
-    console.log(method+ " -->success");
-    return await vsTokenRepo.sendSignTransaction(rawTrans,defaultAccount,defaultPrivateKey);
-  } else {
-    console.log(method+ " -->failed");
-    return {
-      'message':'Wallet address or no. of tokens is missing.'
-    };
+      const rawTrans = await vsTokenRepo.getContract().methods.transferTo(_addressTo, Number(_value));
+      console.log(method + " -->success");
+      return await vsTokenRepo.sendSignTransaction(rawTrans, defaultAccount, defaultPrivateKey);
+    } else {
+      console.log(method + " -->failed");
+      return {
+        'message': 'Wallet address or no. of tokens is missing.'
+      };
+    }
+
   }
-
-}
 
   // gui token
   // @addressFrom
   // @addressTo
   // @value
-  async transferFrom(_addressFrom,_thePrivateKey,_addressTo,_value) {
-    let method="vsTokenService/transferTo";
-    console.log(method+ " -->start");
+  async transferFrom(_addressFrom, _thePrivateKey, _addressTo, _value) {
+    let method = "vsTokenService/transferTo";
+    console.log(method + " -->start");
     if (_addressTo && _value) {
-  
-      const rawTrans = await vsTokenRepo.getContract().methods.transferFrom(_addressFrom,_addressTo,Number(_value));
-      console.log(method+ " -->success");
-      return await vsTokenRepo.sendSignTransaction(rawTrans,_addressFrom,_thePrivateKey);
+
+      const rawTrans = await vsTokenRepo.getContract().methods.transferFrom(_addressFrom, _addressTo, Number(_value));
+      console.log(method + " -->success");
+      return await vsTokenRepo.sendSignTransaction(rawTrans, _addressFrom, _thePrivateKey);
     } else {
-      console.log(method+ " -->failed");
+      console.log(method + " -->failed");
       return {
-        'message':'Wallet address or no. of tokens is missing.'
+        'message': 'Wallet address or no. of tokens is missing.'
       };
     }
-  
+
   }
 
 }
